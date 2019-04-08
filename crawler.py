@@ -7,6 +7,7 @@ from lxml import etree
 # pip install -i requests https://pypi.douban.com/simple
 # pip install -i https://pypi.douban.com/simple pandas 
 # pip install lxml
+# pip install bs4
 # https://zhuanlan.zhihu.com/p/32037625
 
 url = 'https://movie.douban.com/subject/1292052/'
