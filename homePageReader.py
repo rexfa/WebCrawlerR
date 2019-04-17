@@ -22,12 +22,14 @@ class homePageReader:
         #use re.findall to get all the links
         #links = re.findall('"((http|ftp)s?://.*?)"', html)
             #print(html)
-            mores = re.findall('"((http|ftp)s?更多)"',html)
-            links = re.findall('"((http|ftp)s?://.*?)"', html)
+            # 正则表达式分析首页链接
+            mores = re.findall(r'more\"><a href=\"(.*)\">更多',html)
+            #links = re.findall('"((http|ftp)s?://.*?)"', html)
         #htmlData=requests.get(self.__url).text
         #s=etree.HTML(htmlData)
             #print(links)
             print(mores)
+            return mores
 
 
 a = homePageReader('file:/D:/VSCode/Python/WebCrawlerR/ExHTML/中国农业科学院作物科学研究所内网.html')
