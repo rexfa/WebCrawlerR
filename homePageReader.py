@@ -31,8 +31,9 @@ class homePageReader:
             print(mores)
             return mores
 
-
-a = homePageReader('file:/D:/VSCode/Python/WebCrawlerR/ExHTML/中国农业科学院作物科学研究所内网.html')
+#没有host的 就是一个/ file:/
+#相对地址冒号后面就不要/了
+a = homePageReader('file:ExHTML/中国农业科学院作物科学研究所内网.html') 
 a.analysis(False)
         
 
