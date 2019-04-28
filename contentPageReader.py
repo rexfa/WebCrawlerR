@@ -25,7 +25,7 @@ class contentPageReader:
         # content = htmlTree.xpath('/html/body/div[3]/div[1]/div[2]/div[4]')
         print(title,content)
         #print(htmlClear.find("<div class=\"content\">"))
-        return
+        return title,content
 
     def getinnerhtml(self,data):
         return data[data.find(">")+1:data.rfind("</")]
@@ -33,6 +33,8 @@ class contentPageReader:
 
 
 a = contentPageReader('file:ExHTML/所领导慰问春节期间安全值班人员_中国农业科学院作物科学研究所内网.html')
-a.analysis()
+t,c = a.analysis()
+imgs = re.findall(r'src=\"(.*)\"style=',c)
+print(imgs)
 # str1="<a>OK<b>[推荐]</b></a>"
 # print(a.getinnerhtml(str1))
