@@ -4,17 +4,19 @@ class contentSaver:
     __content = ''
     __section = ''
     __type = ''
-    def __init__(self,section,title,content,fileType=''):
+    __time = ''
+    def __init__(self,section,title,content,time,fileType=''):
         self.__section = section
         self.__title = title
         self.__content = content
+        self.__time = time
         if(len(fileType)>0):
             self.__type = '.'+fileType
     
     def save(self):        
-        if(not os.path.exists('.\\save\\'+self.__section+'\\')):
-            os.makedirs('.\\save\\'+self.__section+'\\')
-        with open('.\\save\\'+self.__section+'\\'+self.__title+self.__type,'w',encoding='utf-8') as file1:
+        if(not os.path.exists('.\\save\\'+self.__section+'\\'+self.__time+'\\')):
+            os.makedirs('.\\save\\'+self.__section+'\\'+self.__time+'\\')
+        with open('.\\save\\'+self.__section+'\\'+self.__time+'\\'+self.__title+self.__type,'w',encoding='utf-8') as file1:
             #for i in content: # 按行写
             #        print(i)
             file1.write(self.__content)#写入数据，文件保存在上面指定的目录，按行写时候加\n为了换行更方便阅读
