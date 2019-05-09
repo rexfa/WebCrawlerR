@@ -18,10 +18,14 @@ class contentPageReader:
         #替换掉空格换行回车后注意式子里没有这些字符了
         htmlClear = html.replace(' ', '').replace('\n', '').replace('\r', '').replace('\t', '')
         contentRaw = re.findall(r'<divclass=\"content\"><tablewidth=\"100%\"><tbody><tr><td>(.*)</td></tr></tbody></table></div>',htmlClear)[0]
-        content = re.findall(r'<divid=\"contentMidPicAD"style="float:right;clear:both;top:0;vertical-align:top;"></div><pstyle=\"text-indent:2em;\">(.*)</p><pstyle=\"text-align:right;\">',contentRaw)[0]    
-        timeRaw = re.findall(r'<pstyle=\"text-align:right;\">(.*)</p>',contentRaw)[0]
-        timeR0 = re.findall(r'<br>(.*)</p>',timeRaw)
-        time = str.split(timeR0[0],'</p>')[0]
+        content=''
+        try:
+            content = re.findall(r'<divid=\"contentMidPicAD"style="float:right;clear:both;top:0;vertical-align:top;"></div><pstyle=\"text-indent:2em;\">(.*)</p><pstyle=\"text-align:right;\">',contentRaw)[0]    
+        except:
+            content=''
+        time = re.findall(r'时间:</small>(.*)<small>来源',html)[0]
+        #timeR0 = re.findall(r'<br>(.*)</p>',timeRaw)
+        #time = str.split(timeR0[0],'</p>')[0]
         #content = htmlClear[htmlClear.find("<div class=\"content\">")+1:htmlClear.rfind("</td></tr></tbody></table></div>")]
         # print(htmlClear)
         #content = re.findall(r'<div class=\"content\"><table width=\"100%\">(.*)</tbody></table></div>',html)
@@ -32,7 +36,7 @@ class contentPageReader:
         #print(htmlClear.find("<div class=\"content\">"))
         
         content = self.cleanHTML(content)
-        return title,content,time
+        return title,time,content,contentRaw
 
     def getinnerhtml(self,data):
         i=0
@@ -66,11 +70,15 @@ class contentPageReader:
 
 
 
-a = contentPageReader('file:ExHTML/所领导慰问春节期间安全值班人员_中国农业科学院作物科学研究所内网.html')
-tl,c,t = a.analysis()
+a = contentPageReader('file:ExHTML/作科所参保人员领取待遇申请表及职工离所离岗手续清单_中国农业科学院作物科学研究所内网.html')
+tl,t,c,craw = a.analysis()
 print(tl)
 print(c)
 print(t)
+print(craw)
+craw = craw.replace('</p>','\n')
+docs = re.findall(r'<ahref=\"(.*)</a>',craw)
+print(docs)
 # print(a.cleanHTML(c))
 # imgs = re.findall(r'src=\"(.*)\"style=',c)
 # print(imgs)

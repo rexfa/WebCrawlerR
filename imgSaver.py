@@ -7,16 +7,20 @@ import os
 
 class imgSaver:
     __title=''
+    __time =''
     __content = ''
     __section = ''
     __type = ''
-    def __init__(self,section,title,content):
+    def __init__(self,section,time,title,contentRaw):
         self.__section = section
         self.__title = title
-        self.__content = content
-    def analysisAndSave(self):
+        self.__content = contentRaw
+        self.__time = time
+
+    def analysis(self):
         imgs = re.findall(r'src=\"(.*)\"style=',self.__content)
-        self.__save(imgs)
+        return imgs
+ 
 
     def __save(self,imgs):
         for imgUrl in imgs:
