@@ -8,7 +8,7 @@ class innerPageReader:
     __url=''
     def __init__(self,url):
         self.__url = url
-    def analysis(self,isLocal):
+    def analysis(self):
         website = urllib.request.urlopen(self.__url)
         #read html code
         html = website.read().decode('UTF-8')
@@ -16,8 +16,12 @@ class innerPageReader:
         titleRaw = re.findall(r'\[<b>(.*)\" class=\"title',html)
         classTitleDice = {}
         i = 0
+        #ts=[]
+        #cs=[]
         for t in titleRaw:
             ts = re.findall(r'\">(.*)</a></b>]',t)
+            if(len(ts)<=0):
+                ts = re.findall(r'\'>(.*)</a></b>]',t)
             cs = re.findall(r'</a></b>] <a href=\"(.*)',t)
             vaule=[ts[0],cs[0]]
             classTitleDice[i]=vaule
@@ -28,9 +32,9 @@ class innerPageReader:
     def pageAnalysis(self):
         website = urllib.request.urlopen(self.__url)
         html = website.read().decode('UTF-8')
-        secondPage = re.findall(r'<li><a href=\"(.*)\">2</a></li>',html)
-        nextPage = re.findall(r'<li><a href=\"(.*)\">下一页</a></li>',html)
-        lastPage = re.findall(r'<li><a href=\"(.*)\">末页</a></li>',html)
+        secondPage = re.findall(r'<li><a href=\'(.*)\'>2</a></li>',html)
+        nextPage = re.findall(r'<li><a href=\'(.*)\'>下一页</a></li>',html)
+        lastPage = re.findall(r'<li><a href=\'(.*)\'>末页</a></li>',html)
         morePages = []
         if(len(secondPage)>0):
              # 计算出有多少分页 页面
@@ -44,11 +48,14 @@ class innerPageReader:
                 # 注意+1
                 p = start0+"_"+start1+"_"+str(i+1)+".html"
                 morePages.append(p)
-        print(secondPage,nextPage,lastPage)
-        print(morePages)
+        # print(secondPage,nextPage,lastPage)
+        # print(morePages)
+        # morePages.append(self.__url)
         return morePages
 
 #相对地址冒号后面就不要/了
 a = innerPageReader('file:ExHTML/科研信息_中国农业科学院作物科学研究所内网.html') 
 #a.analysis(False)
-a.pageAnalysis()
+morePages = a.pageAnalysis()
+cons = a.analysis()
+print(morePages)
