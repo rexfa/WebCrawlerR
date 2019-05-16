@@ -38,20 +38,31 @@ class innerPageReader:
         morePages = []
         if(len(secondPage)>0):
              # 计算出有多少分页 页面
-             numStr = re.findall(r'list_(.*).html',lastPage[0])[0]
-             start0 = lastPage[0].split('_')[0]
-             start1= lastPage[0].split('_')[1]
-             lastNumString = numStr.split('_')[1]
-             lastNum =int(lastNumString)
-             for i in range(1,lastNum):
-                # 循环组合出所有分页页面
-                # 注意+1
-                p = start0+"_"+start1+"_"+str(i+1)+".html"
-                morePages.append(p)
-        # print(secondPage,nextPage,lastPage)
+             numStr=''
+             if(lastPage[0].find('.html')>=0):
+                numStr = re.findall(r'list_(.*).html',lastPage[0])[0]
+                start0 = lastPage[0].split('_')[0]
+                start1= lastPage[0].split('_')[1]
+                lastNumString = numStr.split('_')[1]
+                lastNum =int(lastNumString)
+                for i in range(1,lastNum):
+                    # 循环组合出所有分页页面
+                    # 注意+1
+                    p = start0+"_"+start1+"_"+str(i+1)+".html"
+                    morePages.append(p)
+                return morePages
+             else:
+                numStr = re.findall(r'PageNo=(.*)',lastPage[0])[0]       
+                lastNum =int(numStr)
+                for i in range(1,lastNum):
+                    # 循环组合出所有分页页面
+                    # 注意+1
+                    p = lastPage[0][0:len(lastPage[0])-1]+str(i+1)
+                    morePages.append(p)
+                return morePages
         # print(morePages)
         # morePages.append(self.__url)
-        return morePages
+
 
 #相对地址冒号后面就不要/了
 a = innerPageReader('file:ExHTML/科研信息_中国农业科学院作物科学研究所内网.html') 
