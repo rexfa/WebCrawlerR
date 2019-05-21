@@ -22,14 +22,17 @@ class imgSaver:
         return imgs
  
 
-    def __save(self,imgs):
+    def save(self,imgs):
         for imgUrl in imgs:
             website = urllib.request.urlopen(imgUrl)
-            #read html code
-            img = website.read()
-        if(not os.path.exists('.\\save\\'+self.__section+'\\')):
-            os.makedirs('.\\save\\'+self.__section+'\\')
-        with open('.\\save\\'+self.__section+'\\'+self.__title+self.__type,'w',encoding='utf-8') as file1:
-            #for i in content: # 按行写
-            #        print(i)
-            file1.write(self.__content)
+            self.__type = self.__extension(website)
+            if(not os.path.exists('.\\save\\'+self.__section+'\\'+self.__time +'\\')):
+                os.makedirs('.\\save\\'+self.__section+'\\'+self.__time +'\\')
+            with open('.\\save\\'+self.__section+'\\'+self.__time +'\\'+self.__title+self.__type,'w') as file1:
+                #for i in content: # 按行写
+                #        print(i)
+                file1.write(website.read())
+    
+    def __extension(self,filename):
+        fs = filename.split('.')
+        return fs[len(fs)-1]
