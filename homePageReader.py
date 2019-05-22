@@ -24,12 +24,14 @@ class homePageReader:
             #print(html)
             # 正则表达式分析首页链接
         mores = re.findall(r'more\"><a href=\"(.*)\">更多',html)
+        sections = []
         for m in mores:
             if(m.find('?')>=0):
                 m=m.replace('?','\\?')
             titlsRaw= re.findall(r'<strong><a href=\"'+m+'\">(.*)</a></strong><span class=\"more\">',html)
-            print(titlsRaw) 
-        return mores
+            #print(titlsRaw) 
+            sections.append([titlsRaw[0],m])
+        return sections
 
 #没有host的 就是一个/ file:/
 #相对地址冒号后面就不要/了

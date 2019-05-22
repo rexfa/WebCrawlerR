@@ -12,21 +12,24 @@ print('more')
 print(mores)
 print('^^^^^^^^^^^^^^^^^^^^^开始读取内页^^^^^^^^^^^^^^^^^^^^^^^^^^')
 
-def getAllContents(contentUrls):
+def getAllContents(contentUrls,section):
         for c in contentUrls:
-                getContent(c)
+                getContent(c,section)
 
-def getContent(contentUrl):
+def getContent(contentUrl,section):
         url = homeurl+contentUrl
         con = contentPageReader.contentPageReader(url)        
-        tl,t,c,craw = con.analysis()
-        print(tl)
-        print(c)
-        print(t)
-        print(craw)
+        title,time,content,contentRaw  = con.analysis()
+        docS = docSaver.docSaver(section,time,title,contentRaw)
+        imgS = imgSaver.imgSaver(section,time,title,contentRaw)
+        print(section)
+        print(time)
+        print(title)
+        print(contentRaw)
+
         
 for ms in mores:
-    inner = innerPageReader.innerPageReader(homeurl+ms)
+    inner = innerPageReader.innerPageReader(homeurl+ms[1])
     contens = inner.analysis()
     morePages = inner.pageAnalysis()
     print('更多页')
